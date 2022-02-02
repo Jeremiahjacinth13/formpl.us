@@ -1,0 +1,84 @@
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+.sortcontrollers__container{
+    display: flex;
+    gap: 1em;
+    align-items: center;
+}
+
+input, .selectfield__container{
+    border: 1px solid var(--border-color);
+    padding: 0.6rem;
+    outline: none;
+    border-radius: 2px;
+    width: 100%;
+    font-size: 16px;
+}
+  
+.textinput__container{
+    width: 320px;
+}
+
+.selectfield__container{
+    width: 160px;
+    /* background: red; */
+    position: relative;
+}
+
+.selectfield__label{
+    font-size: 10px;
+    position: absolute;
+    background-color: white;
+    z-index: 1;
+    padding: 0 6px;
+    top: 0;
+    transform: translateY(-50%);
+}
+
+.selectfield__value{
+    width: 100%;
+    text-align: left;   
+}
+
+.selectfield__options{
+    position: absolute;
+    top: 120%;
+    width: 100%;
+    background: white;
+    right: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    font-size: 14px;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+.selectfield__option {
+    animation: fadeIn forwards 350ms ease;
+    padding: 1rem;
+    transition: background-color 350ms ease;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+}
+
+.selectfield__option:hover{
+    background-color:var(--neutral);
+}
+
+.selectfield__option:not(.selectfield__option:last-of-type) {
+    border-bottom: 1px solid var(--border-color);
+
+}

@@ -1,0 +1,11 @@
+.banner__container {
+    background-color: var(--faded-orange);
+    padding: 1.2rem;
+    border-radius: 2px;
+    text-align: center;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
