@@ -7,3 +7,5 @@ export interface TemplateInterface{
     created: string,
     link: string
 }
+
+export const NUMBER_OF_TEMPLATES_SHOWN_PER_PAGE = 39;

@@ -3,7 +3,7 @@ import './styles/banner.css'
 
 export const Banner: React.FC = () => {
   return (
-    <div className="banner__container">
+    <div className="banner__container container">
       <InfoCircleIcon />
       <p>
         Tada! Get started with a free template. Can’t find what you are looking

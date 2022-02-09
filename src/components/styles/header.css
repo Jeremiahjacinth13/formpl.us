@@ -1,9 +1,12 @@
-header {
+header > div {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 4rem;
-    margin-bottom: 4rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    position: sticky;
+    top: -1.2rem;
+    background-color: var(--background-color);
 }
 
 .sortcontrollers__container{

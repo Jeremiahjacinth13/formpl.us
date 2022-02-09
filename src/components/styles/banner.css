@@ -1,4 +1,4 @@
-.banner__container {
+.banner__container.container {
     background-color: var(--faded-orange);
     padding: 1.2rem;
     border-radius: 2px;

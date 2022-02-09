@@ -1,4 +1,4 @@
-.templates__container {
+.templates__container.container {
   margin-top: 5rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);

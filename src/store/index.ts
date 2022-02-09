@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import templateReducer from './slices/templateSlice';
+import paginatorReducer from './slices/paginatorSlice';
 
 const store = configureStore({
     reducer:{
-        templates: templateReducer
+        templates: templateReducer,
+        paginator: paginatorReducer,
     }
 })
 

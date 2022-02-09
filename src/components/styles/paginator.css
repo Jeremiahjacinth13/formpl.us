@@ -1,19 +1,29 @@
-.paginator__container{
-    display: flex;
-    width: 80%;
-    margin: auto;
-    justify-content: space-between;
-    margin-bottom: 4rem;
+.paginator__container {
+  display: flex;
+  width: 80%;
+  margin: auto;
+  justify-content: space-between;
+  margin-bottom: 4rem;
 }
 
-.paginator__control{
-    display: flex;
-    gap: 10px;
-    align-items: center;
+.paginator__control {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-.paginator__currentPage{
-    border: 1px solid black;
-    border-radius: 3px;
-    padding: 5px;
+.paginator__currentPage {
+  border: 1px solid black;
+  border-radius: 3px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.paginator__value {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }

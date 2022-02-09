@@ -1,39 +1,44 @@
-import React, { useCallback, useState } from 'react'
-import axios from 'axios'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+
+import { filterByCategory, filterViaSearch, sortByDate, sortByOrder } from '../store/slices/templateSlice'
 import { TextInput } from './TextInput'
-import debounce from '../utils/debounce'
-
-import { API_ENDPOINT } from '../constants'
 import { SelectField } from '.'
-
+import { API_ENDPOINT } from '../constants'
+import debounce from '../utils/debounce'
 import './styles/header.css'
 
 const Header: React.FC = () => {
   return (
     <header>
-      <SearchControllers />
-      <SortControllers />
+      <div className="container">
+        <SearchControllers />
+        <SortControllers />
+      </div>
     </header>
   )
 }
 
 const SearchControllers: React.FC = () => {
+  const dispatch = useDispatch()
   const [searchValue, setSearchValue] = useState<string>('')
+  let searchValueRef = useRef<string>('')
 
-  const debounceAPIRequest = debounce(async () => {
-    try {
-      const { data } = await axios.get(API_ENDPOINT);
-      console.log(data)
-    } catch (error) {
-      console.error(error)
-    }
-  }, 350)
+  function setSearchValueRef(newSearchValue: string) {
+    searchValueRef.current = newSearchValue
+    setSearchValue(newSearchValue)
+  }
 
-  const getTemplatesfromAPI = useCallback(() => debounceAPIRequest(), [])
+  const debouncedDispatch = debounce(
+    () => dispatch(filterViaSearch(searchValueRef.current)),
+    700,
+  )
+
+  const memoisedDebouncedDispatch = useCallback(() => debouncedDispatch(), []);
 
   const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.currentTarget.value)
-    getTemplatesfromAPI()
+    setSearchValueRef(e.currentTarget.value)
+    memoisedDebouncedDispatch()
   }
 
   return (
@@ -46,11 +51,14 @@ const SearchControllers: React.FC = () => {
 }
 
 const SortControllers: React.FC = () => {
+
   const [sortControllerValues, setSortControllerValues] = useState({
     category: 'All',
     order: 'Default',
     date: 'Default',
-  })
+  });
+
+  const dispatch = useDispatch();
 
   const handleSortValuesChange = (key: string, value: string) => {
     setSortControllerValues({
@@ -59,6 +67,21 @@ const SortControllers: React.FC = () => {
     })
   }
 
+  useEffect(() => {
+    console.log(sortControllerValues.category)
+    dispatch(filterByCategory(sortControllerValues.category))
+  },[sortControllerValues.category]);
+
+  useEffect(() => {
+    console.log(sortControllerValues.date)
+    dispatch(sortByDate(sortControllerValues.date))
+  },[sortControllerValues.date]);
+
+  useEffect(() => {
+    console.log(sortControllerValues.order)
+    dispatch(sortByOrder(sortControllerValues.order))
+  },[sortControllerValues.order]);
+
   return (
     <div className="sortcontrollers__container">
       <p>Sort By:</p>
@@ -66,7 +89,7 @@ const SortControllers: React.FC = () => {
         name="Category"
         value={sortControllerValues.category}
         onChange={handleSortValuesChange}
-        options={['All', 'Education', 'E-Commerce', 'Health']}
+        options={['All', 'Education', 'E-commerce', 'Health']}
       />
       <SelectField
         name="Order"
