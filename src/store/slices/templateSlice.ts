@@ -18,10 +18,32 @@ interface TemplateSliceInterface {
 const initialState: TemplateSliceInterface = {
     succeeded: false,
     failed: false,
-    loading: true,
+    loading: false,
     errorMessage: '',
     templates: [],
-    hiddenTemplates: []
+    hiddenTemplates: [
+        {
+            name: 'Jermeiah Lena',
+            created: '100000',
+            category: ['E-commerce', 'Health'],
+            description: 'This is some random template you can use for your something',
+            link: 'https://linktotemplate.com'
+        },
+        {
+            name: 'Something Nice',
+            created: '1000000',
+            category: ['Health'],
+            description: 'This is some random template you can use for your something',
+            link: 'https://linktotemplate.com'
+        },
+        {
+            name: 'Hello There Nice',
+            created: '10000000',
+            category: ['E-commerce', 'Education'],
+            description: 'This is some random template you can use for your something',
+            link: 'https://linktotemplate.com'
+        },
+    ]
 }
 
 export const getTemplatesFromAPI = createAsyncThunk(
@@ -41,7 +63,7 @@ const templateSlice = createSlice({
     initialState,
     reducers: {
         filterViaSearch(state, action) {
-            let searchResults = state.templates.filter(template => template.name.includes(action.payload));
+            let searchResults = state.hiddenTemplates.filter(template => template.name.toLowerCase().includes(action.payload.toLowerCase()));
             state.templates = searchResults;
         },
 
@@ -56,26 +78,24 @@ const templateSlice = createSlice({
 
         sortByDate(state, { payload: order }) {
             if (order.toLowerCase() === 'ascending') {
-                let rearranged = state.templates.sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime())
+                let rearranged = state.hiddenTemplates.sort((a, b) => new Date(a.created).getTime() - new Date(b.created).getTime())
                 state.templates = rearranged;
             } else if (order.toLowerCase() === 'descending') {
-                let rearranged = state.templates.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
+                let rearranged = state.hiddenTemplates.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
                 state.templates = rearranged;
             }
         },
 
         sortByOrder(state, { payload: order }) {
-
             if (order.toLowerCase() === 'ascending') {
-                let rearranged = state.templates.sort();
-                console.log('rearragned ascending\n', rearranged)
+                let rearranged = Array.from(state.hiddenTemplates).sort((a, b) => a.name.localeCompare(b.name));
                 state.templates = rearranged
             } else if (order.toLowerCase() === 'descending') {
-                let rearranged = state.templates.sort().reverse();
-                console.log('rearranged descending\n', rearranged)
+                let rearranged = Array.from(state.hiddenTemplates).sort((a, b) => b.name.localeCompare(a.name));
                 state.templates = rearranged;
+            }else{
+                state.templates = state.hiddenTemplates;
             }
-            console.log('this is what it is')
         }
     },
     extraReducers: (builder) => {

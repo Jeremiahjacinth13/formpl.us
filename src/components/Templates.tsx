@@ -20,7 +20,7 @@ export const Templates: React.FC = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getTemplatesFromAPI(null))
+    // dispatch(getTemplatesFromAPI(null))
   }, [])
 
   return (
