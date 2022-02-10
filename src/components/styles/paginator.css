@@ -22,6 +22,17 @@
   justify-content: center;
 }
 
+.paginator__currentPage::-webkit-outer-spin-button,
+.paginator__currentPage::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.paginator__currentPage {
+  -moz-appearance: textfield;
+}
+
 .paginator__value {
   display: inline-flex;
   align-items: center;

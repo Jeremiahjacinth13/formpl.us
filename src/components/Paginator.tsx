@@ -6,8 +6,10 @@ import {
   paginatorSelector,
   incrementPageIndex,
   decrementPageIndex,
+  setPageIndex as setPageIndexReducer
 } from '../store/slices/paginatorSlice'
 import { NUMBER_OF_TEMPLATES_SHOWN_PER_PAGE } from '../constants'
+import { FormEvent, useEffect, useState } from 'react'
 
 export const Paginator: React.FC = () => {
   const dispatch = useDispatch()
@@ -16,6 +18,17 @@ export const Paginator: React.FC = () => {
   const pageLimit = Math.ceil(
     templates.length / NUMBER_OF_TEMPLATES_SHOWN_PER_PAGE,
   )
+
+  const [pageIndex, setPageIndex] = useState<number>(1)
+
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if(typeof pageIndex === 'number'){
+      dispatch(setPageIndexReducer({pageIndex, pageLimit}));
+    }
+  }
+
+  useEffect(() => setPageIndex(currentPageIndex),[currentPageIndex])
 
   return (
     <div className="paginator__container">
@@ -27,7 +40,14 @@ export const Paginator: React.FC = () => {
         Previous
       </button>
       <p className="paginator__value">
-        <span className="paginator__currentPage">{currentPageIndex}</span>
+        <form onSubmit={handleFormSubmit}>
+          <input
+            className="paginator__currentPage"
+            onChange={(e) => setPageIndex(parseInt(e.currentTarget.value))}
+            type="number"
+            value={pageIndex}
+          />
+        </form>
         {' of '}
         <span className="paginator__totalPages">{pageLimit}</span>
       </p>

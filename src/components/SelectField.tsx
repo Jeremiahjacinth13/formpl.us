@@ -13,7 +13,6 @@ const SelectField: React.FC<SelectFieldOptions> = ({
   options,
   value,
   onChange,
-  id,
 }) => {
 
   const [isOpen, setOpen] = useState(false)

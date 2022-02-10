@@ -1,8 +1,17 @@
-import { render } from '@testing-library/react';
-import App from '../App';
+import { render, fireEvent } from '@testing-library/react';
+import { Banner } from '../components';
 
-test('renders learn react link', () => {
-  const app = render(<App />);
-  const linkElement = app.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+describe('everything works find', () => {
+
+  test('banner component renders correct', async () => {
+    const BannerComponent = render(<Banner />);
+    expect(BannerComponent).toBeInTheDocument;
+  });
+
+  test('two plus two is four', async () => {
+    expect(2 + 2).toEqual(4)
+  });
+
+})
+
+// test()

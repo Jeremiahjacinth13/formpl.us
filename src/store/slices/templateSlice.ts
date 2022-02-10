@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { NUMBER_OF_TEMPLATES_SHOWN_PER_PAGE, TemplateInterface } from '../../constants';
+import { SAMPLE_TEMPLATES, TemplateInterface } from '../../constants';
 import axios from 'axios';
 import { API_ENDPOINT } from '../../constants'
 import { RootState } from '..';
@@ -13,47 +13,29 @@ interface TemplateSliceInterface {
     errorMessage: string,
     templates: TemplateInterface[],
     hiddenTemplates: TemplateInterface[],
+    activeCategoryFilter: 'All' | 'Education' | 'E-commerce' | 'Health'
 }
 
 const initialState: TemplateSliceInterface = {
     succeeded: false,
     failed: false,
-    loading: false,
+    // this should be false but I'm initializing it to true
+    // because I want the loader to show up immediate the page loads
+    loading: true,
     errorMessage: '',
     templates: [],
-    hiddenTemplates: [
-        {
-            name: 'Jermeiah Lena',
-            created: '100000',
-            category: ['E-commerce', 'Health'],
-            description: 'This is some random template you can use for your something',
-            link: 'https://linktotemplate.com'
-        },
-        {
-            name: 'Something Nice',
-            created: '1000000',
-            category: ['Health'],
-            description: 'This is some random template you can use for your something',
-            link: 'https://linktotemplate.com'
-        },
-        {
-            name: 'Hello There Nice',
-            created: '10000000',
-            category: ['E-commerce', 'Education'],
-            description: 'This is some random template you can use for your something',
-            link: 'https://linktotemplate.com'
-        },
-    ]
+    hiddenTemplates: [],
+    activeCategoryFilter: 'All'
 }
 
 export const getTemplatesFromAPI = createAsyncThunk(
     'templates/getTemplatesFromAPI',
-    async (thunkAPI: any) => {
+    async () => {
         try {
             const { data } = await axios.get(API_ENDPOINT);
             return data;
         } catch (error) {
-            thunkAPI.rejectWithValue('Something is freaking happened here', 'are you freaking me?')
+            console.error(error);
         }
     }
 )
@@ -74,6 +56,8 @@ const templateSlice = createSlice({
                 let searchResults = state.hiddenTemplates.filter(template => template.category.includes(selectedCategory));
                 state.templates = searchResults;
             }
+            
+            state.activeCategoryFilter = selectedCategory;
         },
 
         sortByDate(state, { payload: order }) {
@@ -83,6 +67,8 @@ const templateSlice = createSlice({
             } else if (order.toLowerCase() === 'descending') {
                 let rearranged = state.hiddenTemplates.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime());
                 state.templates = rearranged;
+            }else{
+                state.templates = state.hiddenTemplates;
             }
         },
 
@@ -112,8 +98,8 @@ const templateSlice = createSlice({
             state.loading = true;
         })
 
-        builder.addCase(getTemplatesFromAPI.rejected, (state, action) => {
-            state.errorMessage = 'An Error Occurred';
+        builder.addCase(getTemplatesFromAPI.rejected, (state) => {
+            state.errorMessage = 'Unable to reach server. Please check your internet';
             state.failed = true;
             state.loading = true;
             state.succeeded = false;
@@ -128,6 +114,7 @@ export const {
     sortByOrder,
     sortByDate
 } = templateSlice.actions;
+
 export const templatesSelector = (state: RootState) => state.templates;
 
 export default templateSlice.reducer;

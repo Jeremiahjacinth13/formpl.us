@@ -15,6 +15,10 @@ header > div {
     align-items: center;
 }
 
+small {
+    color: var(--muted-text-color);
+}
+
 input, .selectfield__container{
     border: 1px solid var(--border-color);
     padding: 0.6rem;
@@ -41,6 +45,7 @@ input, .selectfield__container{
     z-index: 1;
     padding: 0 6px;
     top: 0;
+    color: var(--muted-text-color);
     transform: translateY(-50%);
 }
 

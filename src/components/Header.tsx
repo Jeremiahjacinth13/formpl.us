@@ -1,10 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { filterByCategory, filterViaSearch, sortByDate, sortByOrder } from '../store/slices/templateSlice'
+import {
+  filterByCategory,
+  filterViaSearch,
+  sortByDate,
+  sortByOrder,
+} from '../store/slices/templateSlice'
+
 import { TextInput } from './TextInput'
 import { SelectField } from '.'
-import { API_ENDPOINT } from '../constants'
 import debounce from '../utils/debounce'
 import './styles/header.css'
 
@@ -34,7 +41,7 @@ const SearchControllers: React.FC = () => {
     700,
   )
 
-  const memoisedDebouncedDispatch = useCallback(() => debouncedDispatch(), []);
+  const memoisedDebouncedDispatch = useCallback(() => debouncedDispatch(), [])
 
   const handleSearchChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValueRef(e.currentTarget.value)
@@ -51,14 +58,13 @@ const SearchControllers: React.FC = () => {
 }
 
 const SortControllers: React.FC = () => {
-
   const [sortControllerValues, setSortControllerValues] = useState({
     category: 'All',
     order: 'Default',
     date: 'Default',
-  });
+  })
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const handleSortValuesChange = (key: string, value: string) => {
     setSortControllerValues({
@@ -69,19 +75,19 @@ const SortControllers: React.FC = () => {
 
   useEffect(() => {
     dispatch(filterByCategory(sortControllerValues.category))
-  },[sortControllerValues.category]);
+  }, [sortControllerValues.category, dispatch])
 
   useEffect(() => {
     dispatch(sortByDate(sortControllerValues.date))
-  },[sortControllerValues.date]);
+  }, [sortControllerValues.date, dispatch])
 
   useEffect(() => {
     dispatch(sortByOrder(sortControllerValues.order))
-  },[sortControllerValues.order]);
+  }, [sortControllerValues.order])
 
   return (
     <div className="sortcontrollers__container">
-      <p>Sort By:</p>
+      <small>Sort By:</small>
       <SelectField
         name="Category"
         value={sortControllerValues.category}
