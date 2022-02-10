@@ -14,14 +14,13 @@ const SelectField: React.FC<SelectFieldOptions> = ({
   value,
   onChange,
 }) => {
-
   const [isOpen, setOpen] = useState(false)
-  
+
   const menuElement = useRef<HTMLDivElement>()
 
-  const listener = (e: MouseEvent) =>{
-    if(!menuElement.current?.contains(e.target as Node)){
-      setOpen(false);
+  const listener = (e: MouseEvent) => {
+    if (!menuElement.current?.contains(e.target as Node)) {
+      setOpen(false)
     }
   }
 
@@ -38,16 +37,26 @@ const SelectField: React.FC<SelectFieldOptions> = ({
     <div
       className="selectfield__container"
       onFocus={handleFocus}
-      ref = {menuElement as any}
+      ref={menuElement as any}
+      data-testid="selectcontainer"
     >
       <label className="selectfield__label">{name}</label>
-      <button className="selectfield__value buttonreset">{value}</button>
+      <button
+        data-testid="selectvalue"
+        className="selectfield__value buttonreset"
+      >
+        {value}
+      </button>
 
       {isOpen && (
-        <div className="selectfield__options">
+        <div className="selectfield__options" data-testid="selectoptions">
           {options.map((option, index) => (
             <button
-              onClick={() => {onChange(name, option); setOpen(false)}}
+              data-testid={`selectoption-${index.toString()}`}
+              onClick={() => {
+                onChange(name, option)
+                setOpen(false)
+              }}
               className="selectfield__option buttonreset"
               key={`option-${index}`}
             >

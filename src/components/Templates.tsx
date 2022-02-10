@@ -81,7 +81,7 @@ export const Templates: React.FC = () => {
 
 const Template: React.FC<{ template: TemplateInterface }> = ({ template }) => {
   return (
-    <div className="template">
+    <div className="template" data-testid = 'template'>
       <div className="template__details__container">
         <h3 className="template__name">{template.name}</h3>
         <p className="template__desc">{template.description}</p>

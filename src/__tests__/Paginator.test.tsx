@@ -7,11 +7,6 @@ describe('everything works find', () => {
     const BannerComponent = render(<Banner />);
     expect(BannerComponent).toBeInTheDocument;
   });
-
-  test('two plus two is four', async () => {
-    expect(2 + 2).toEqual(4)
-  });
-
 })
 
 // test()

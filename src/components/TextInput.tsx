@@ -12,6 +12,7 @@ const TextInput: React.FC<TextInputProps> = ({
   return (
     <div className="textinput__container">
       <input
+        data-testid="inputelement"
         type="text"
         value={value}
         onChange={onChange}
