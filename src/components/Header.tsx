@@ -68,17 +68,14 @@ const SortControllers: React.FC = () => {
   }
 
   useEffect(() => {
-    console.log(sortControllerValues.category)
     dispatch(filterByCategory(sortControllerValues.category))
   },[sortControllerValues.category]);
 
   useEffect(() => {
-    console.log(sortControllerValues.date)
     dispatch(sortByDate(sortControllerValues.date))
   },[sortControllerValues.date]);
 
   useEffect(() => {
-    console.log(sortControllerValues.order)
     dispatch(sortByOrder(sortControllerValues.order))
   },[sortControllerValues.order]);
 
