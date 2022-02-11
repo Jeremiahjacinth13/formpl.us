@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { SAMPLE_TEMPLATES, TemplateInterface } from '../../constants';
+import { TemplateInterface } from '../../constants';
 import axios from 'axios';
 import { API_ENDPOINT } from '../../constants'
 import { RootState } from '..';
