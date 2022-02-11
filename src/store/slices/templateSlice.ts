@@ -99,6 +99,7 @@ const templateSlice = createSlice({
         })
 
         builder.addCase(getTemplatesFromAPI.rejected, (state) => {
+            console.log('the stuff failed');
             state.errorMessage = 'Unable to reach server. Please check your internet';
             state.failed = true;
             state.loading = true;

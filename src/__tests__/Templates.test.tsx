@@ -2,7 +2,6 @@ import { render } from '@testing-library/react'
 import { Templates } from '../components'
 import { Provider } from 'react-redux'
 import { store } from '../store'
-import { NUMBER_OF_TEMPLATES_SHOWN_PER_PAGE } from '../constants';
 
 test('loader shows up immediately we the templates component renders', async () => {
 

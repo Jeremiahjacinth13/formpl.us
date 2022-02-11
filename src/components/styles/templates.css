@@ -17,13 +17,26 @@
   row-gap: 4rem;
 }
 
+@media screen and (max-width: 1136px) {
+  .templates__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .templates__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 .templates__categoryTitle {
   grid-column: 1/4;
 }
 
 .template {
   box-shadow: var(--shadow);
-  height: 250px;
+  height: 200px;
   padding-bottom: 0;
   display: flex;
   flex-direction: column;

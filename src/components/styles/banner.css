@@ -9,3 +9,11 @@
     justify-content: center;
     gap: 10px;
 }
+
+@media screen and (max-width: 768px) {
+
+    .banner__container svg {
+        width: 30px;
+        height: 30px;
+    }
+}
