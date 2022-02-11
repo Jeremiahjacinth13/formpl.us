@@ -5,3 +5,4 @@ export { TextInput } from './TextInput';
 export { Templates } from './Templates';
 export { SelectField } from './SelectField';
 export { Loader } from './Loader';
+export { ErrorContainer } from './ErrorContainer';

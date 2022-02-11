@@ -71,16 +71,3 @@
   background: var(--neutral);
   color: var(--accent-green);
 }
-
-.nosearchresults {
-  height: 40vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  grid-column: 1/4;
-  flex-direction: column;
-}
-
-.nosearchresults img {
-  width: 400px;
-}

@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Paginator, Loader } from '.'
+import { Paginator, Loader, ErrorContainer } from '.'
 import { paginatorSelector } from '../store/slices/paginatorSlice'
 
 import {
@@ -30,7 +30,7 @@ export const Templates: React.FC = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getTemplatesFromAPI())
+    dispatch(getTemplatesFromAPI(null))
   }, [])
 
   return (
@@ -47,11 +47,17 @@ export const Templates: React.FC = () => {
           <Loader />
         </div>
       ) : failed ? (
-        <h1>{errorMessage}</h1>
+        <ErrorContainer
+          imgSrc="https://mir-s3-cdn-cf.behance.net/project_modules/disp/7d206140607689.5785eb0ea644c.png"
+          errorMessage={errorMessage}
+          reload = {() => dispatch(getTemplatesFromAPI(null))}
+        />
       ) : (
         <>
           <div className="container templates__container">
-            <h3 className="templates__categoryTitle">{activeCategoryFilter} Templates</h3>
+            <h3 className="templates__categoryTitle">
+              {activeCategoryFilter} Templates
+            </h3>
             <div className="templates__grid">
               {templates
                 .slice(
@@ -62,13 +68,11 @@ export const Templates: React.FC = () => {
                   <Template key={index} {...{ template }} />
                 ))}
               {templates.length === 0 && (
-                <div className="nosearchresults">
-                  <img
-                    src="https://cdn.dribbble.com/users/734476/screenshots/4020070/artboard_15.png"
-                    alt="no results found"
-                  />
-                  <h1>No Search Results....</h1>
-                </div>
+                <ErrorContainer
+                  imgSrc="https://cdn.dribbble.com/users/734476/screenshots/4020070/artboard_15.png"
+                  imgAlt="Error Image"
+                  errorMessage="No Search Results...."
+                />
               )}
             </div>
           </div>
@@ -81,7 +85,7 @@ export const Templates: React.FC = () => {
 
 const Template: React.FC<{ template: TemplateInterface }> = ({ template }) => {
   return (
-    <div className="template" data-testid = 'template'>
+    <div className="template" data-testid="template">
       <div className="template__details__container">
         <h3 className="template__name">{template.name}</h3>
         <p className="template__desc">{template.description}</p>

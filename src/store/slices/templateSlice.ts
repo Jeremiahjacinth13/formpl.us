@@ -30,11 +30,12 @@ const initialState: TemplateSliceInterface = {
 
 export const getTemplatesFromAPI = createAsyncThunk(
     'templates/getTemplatesFromAPI',
-    async () => {
+    async (thunkAPI: any) => {
         try {
             const { data } = await axios.get(API_ENDPOINT);
             return data;
         } catch (error) {
+            thunkAPI.rejectWithValue('')
             console.error(error);
         }
     }
@@ -99,10 +100,9 @@ const templateSlice = createSlice({
         })
 
         builder.addCase(getTemplatesFromAPI.rejected, (state) => {
-            console.log('the stuff failed');
             state.errorMessage = 'Unable to reach server. Please check your internet';
             state.failed = true;
-            state.loading = true;
+            state.loading = false;
             state.succeeded = false;
         })
     }
